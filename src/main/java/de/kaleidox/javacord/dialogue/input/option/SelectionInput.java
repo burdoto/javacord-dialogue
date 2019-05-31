@@ -20,7 +20,7 @@ import org.javacord.api.util.event.ListenerManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SelectionInput<R> extends SingleInputAction<SelectionInput, R> {
+public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
     private final List<EmojiOption<R>> options;
     private CompletableFuture<R> responseFuture;
     private List<ListenerManager<?>> listenerManagers;
