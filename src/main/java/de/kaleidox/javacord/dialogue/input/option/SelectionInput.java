@@ -25,7 +25,11 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput, R> {
     private CompletableFuture<R> responseFuture;
     private List<ListenerManager<?>> listenerManagers;
 
-    protected SelectionInput(@NotNull TextChannel context, @Nullable Supplier<EmbedBuilder> embedBaseSupplier) {
+    public SelectionInput(@NotNull TextChannel context) {
+        this(context, null);
+    }
+
+    public SelectionInput(@NotNull TextChannel context, @Nullable Supplier<EmbedBuilder> embedBaseSupplier) {
         super(context, embedBaseSupplier);
 
         this.options = new ArrayList<>();
