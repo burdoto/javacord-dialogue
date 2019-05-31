@@ -102,5 +102,5 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/gradle,intellij
 
-props/
-src/test/java/de/kaleidox/test/Main.java
+run/
+src/test/java/de/kaleidox/javacord/dialogue/test/bot/Main.java
