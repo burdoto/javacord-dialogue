@@ -106,7 +106,7 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
                 });
     }
 
-    private void handleReaction(SingleReactionEvent event) {
+    private synchronized void handleReaction(SingleReactionEvent event) {
         if (!Objects.equals(target, event.getUser()))
             return;
 
