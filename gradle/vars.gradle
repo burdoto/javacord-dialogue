@@ -1,0 +1,14 @@
+import static java.lang.System.getenv
+
+ext {
+    artifactName = 'javacord-dialogue'
+    projectName = 'Javacord Dialogues'
+    projectDescription = 'Dialogue structure for Javacord'
+
+    snapshot = project.version.endsWith("-SNAPSHOT")
+
+    sonatypeUsername = getenv("sonatypeUsername")
+    sonatypePassword = getenv("sonatypePassword")
+}
+
+ext."signing.password" = getenv("gpgKeyPassword")
