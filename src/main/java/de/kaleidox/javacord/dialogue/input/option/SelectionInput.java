@@ -63,6 +63,8 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
 
     @Override
     public CompletableFuture<R> listenAsync() {
+        active = true;
+
         addEmbedModifier(embed -> {
             embed.removeAllFields();
 
