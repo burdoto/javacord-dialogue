@@ -35,6 +35,10 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
         this.options = new ArrayList<>();
     }
 
+    public SelectionInput<R> addOption(String name, String description, String emoji, R value) {
+        return addOption(new EmojiOption<>(name, description, emoji, value));
+    }
+
     public SelectionInput<R> addOption(EmojiOption<R> option) {
         if (active) throw new IllegalStateException("InputAction was already executed!");
 
