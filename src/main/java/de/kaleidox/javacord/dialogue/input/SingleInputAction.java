@@ -10,8 +10,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import de.kaleidox.javacord.dialogue.model.Executable;
+import de.kaleidox.javacord.dialogue.model.Listenable;
 import de.kaleidox.javacord.dialogue.model.SelfDefaultable;
+import de.kaleidox.javacord.dialogue.model.SelfTargetable;
 import de.kaleidox.javacord.dialogue.model.SelfTimeoutable;
 import de.kaleidox.javacord.util.ui.embed.DefaultEmbedFactory;
 
@@ -19,11 +20,12 @@ import org.javacord.api.DiscordApi;
 import org.javacord.api.entity.channel.Channel;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class SingleInputAction<Self extends SingleInputAction, R>
-        implements SelfTimeoutable<Self>, SelfDefaultable<Self, R>, Executable<R> {
+        implements SelfTimeoutable<Self>, SelfDefaultable<Self, R>, SelfTargetable<Self, User>, Listenable<R> {
     protected final DiscordApi api;
     protected final long context;
     protected final Supplier<EmbedBuilder> embedBaseSupplier;
@@ -32,6 +34,7 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R>
     protected long timeout = -1;
     protected @Nullable TimeUnit timeUnit;
     protected @Nullable R defaultValue;
+    protected @Nullable User target;
 
     protected boolean active = false;
 
@@ -85,6 +88,21 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R>
     @Override
     public Optional<R> getDefaultValue() {
         return Optional.ofNullable(defaultValue);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Self withTarget(User target) {
+        if (active) throw new IllegalStateException("InputAction was already executed!");
+
+        this.target = target;
+
+        return (Self) this;
+    }
+
+    @Override
+    public Optional<User> getTarget() {
+        return Optional.ofNullable(target);
     }
 
     protected EmbedBuilder makeEmbed() {
