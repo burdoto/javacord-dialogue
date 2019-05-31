@@ -54,9 +54,12 @@ public class TextInput extends SingleInputAction<TextInput, String> {
                                 .addRemoveHandler(() -> {
                                     long msg = sentMessage.get();
                                     if (msg != -1) api.getCachedMessageById(msg).ifPresent(Message::delete);
-                                    if (defaultValue == null)
-                                        responseFuture.completeExceptionally(new ResponseTimeoutException());
-                                    else responseFuture.complete(defaultValue);
+
+                                    if (!responseFuture.isDone()) {
+                                        if (defaultValue == null)
+                                            responseFuture.completeExceptionally(new ResponseTimeoutException());
+                                        else responseFuture.complete(defaultValue);
+                                    }
                                 });
                     return responseFuture;
                 });
