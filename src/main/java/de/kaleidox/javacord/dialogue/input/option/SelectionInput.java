@@ -46,7 +46,7 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
     public SelectionInput<R> addOption(EmojiOption<R> option) {
         if (active) throw new IllegalStateException("SelectionInput is already listening!");
         if (options.stream().anyMatch(opt -> opt.getEmoji().equals(option.getEmoji())))
-            throw new IllegalArgumentException("Emoji ["+option.getEmoji()+"] is already used!");
+            throw new IllegalArgumentException("Emoji [" + option.getEmoji() + "] is already used!");
 
         options.add(option);
 
