@@ -14,6 +14,7 @@ import de.kaleidox.javacord.dialogue.input.SingleInputAction;
 import de.kaleidox.javacord.dialogue.input.option.model.EmojiOption;
 
 import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.reaction.SingleReactionEvent;
 import org.javacord.api.util.event.ListenerManager;
@@ -40,7 +41,7 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
     }
 
     public SelectionInput<R> addOption(EmojiOption<R> option) {
-        if (active) throw new IllegalStateException("InputAction was already executed!");
+        if (active) throw new IllegalStateException("SelectionInput is already listening!");
         if (options.stream().anyMatch(opt -> opt.getEmoji().equals(option.getEmoji())))
             throw new IllegalArgumentException("Emoji ["+option.getEmoji()+"] is already used!");
 
@@ -50,7 +51,7 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
     }
 
     public SelectionInput<R> removeOptionIf(Predicate<EmojiOption<R>> filter) {
-        if (active) throw new IllegalStateException("InputAction was already executed!");
+        if (active) throw new IllegalStateException("SelectionInput is already listening!");
 
         options.removeIf(filter);
 
@@ -63,6 +64,8 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
 
     @Override
     public CompletableFuture<R> listenAsync() {
+        if (active) throw new IllegalStateException("SelectionInput is already listening!");
+
         active = true;
 
         addEmbedModifier(embed -> {
@@ -111,7 +114,10 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
             return;
 
         Optional<EmojiOption<R>> option = options.stream()
-                .filter(opt -> event.getEmoji().asUnicodeEmoji().map(opt.getEmoji()::equals).orElse(false))
+                .filter(opt -> event.getEmoji()
+                        .asUnicodeEmoji()
+                        .map(opt.getEmoji()::equals)
+                        .orElse(false))
                 .findFirst();
 
         if (!option.isPresent()) return;

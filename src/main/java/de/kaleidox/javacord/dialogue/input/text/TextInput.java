@@ -35,7 +35,7 @@ public class TextInput extends SingleInputAction<TextInput, String> {
 
     @Override
     public CompletableFuture<String> listenAsync() {
-        if (active) throw new IllegalStateException("Input was already executed!");
+        if (active) throw new IllegalStateException("TextInput is already listening!");
 
         this.active = true;
 
