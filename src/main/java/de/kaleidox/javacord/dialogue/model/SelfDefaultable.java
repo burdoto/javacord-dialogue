@@ -10,10 +10,9 @@ public interface SelfDefaultable<Self, T> {
 
     Optional<T> getDefaultValue();
 
-    @SuppressWarnings({"ConstantConditions", "unchecked"})
+    @SuppressWarnings("ConstantConditions")
     @Contract(value = "-> this", mutates = "this")
     default Self removeDefaultValue() {
-        withDefaultValue(null);
-        return (Self) this;
+        return withDefaultValue(null);
     }
 }

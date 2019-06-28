@@ -10,10 +10,9 @@ public interface SelfTargetable<Self extends SelfTargetable, Z> {
 
     Optional<Z> getTarget();
 
-    @SuppressWarnings({"ConstantConditions", "unchecked"})
+    @SuppressWarnings("ConstantConditions")
     @Contract(value = "-> this", mutates = "this")
     default Self removeTarget() {
-        withTarget(null);
-        return (Self) this;
+        return withTarget(null);
     }
 }

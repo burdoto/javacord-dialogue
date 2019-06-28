@@ -12,10 +12,9 @@ public interface SelfTimeoutable<Self extends SelfTimeoutable> {
 
     Optional<Duration> getTimeout();
 
-    @SuppressWarnings({"ConstantConditions", "unchecked"})
+    @SuppressWarnings("ConstantConditions")
     @Contract(value = "-> this", mutates = "this")
     default Self removeTimeout() {
-        withTimeout(0, null);
-        return (Self) this;
+        return withTimeout(0, null);
     }
 }
