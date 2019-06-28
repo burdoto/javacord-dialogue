@@ -118,5 +118,8 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
 
         option.ifPresent(opt -> responseFuture.complete(opt.getValue()));
         listenerManagers.forEach(ListenerManager::remove);
+
+        if (responseDeletion)
+            event.getMessage().ifPresent(Message::delete);
     }
 }

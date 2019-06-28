@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 
 import de.kaleidox.javacord.dialogue.model.Listenable;
 import de.kaleidox.javacord.dialogue.model.SelfDefaultable;
+import de.kaleidox.javacord.dialogue.model.SelfResponseDeletable;
 import de.kaleidox.javacord.dialogue.model.SelfTargetable;
 import de.kaleidox.javacord.dialogue.model.SelfTimeoutable;
 import de.kaleidox.javacord.util.ui.embed.DefaultEmbedFactory;
@@ -24,8 +25,12 @@ import org.javacord.api.entity.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class SingleInputAction<Self extends SingleInputAction, R>
-        implements SelfTimeoutable<Self>, SelfDefaultable<Self, R>, SelfTargetable<Self, User>, Listenable<R> {
+public abstract class SingleInputAction<Self extends SingleInputAction, R> implements
+        SelfTimeoutable<Self>,
+        SelfDefaultable<Self, R>,
+        SelfTargetable<Self, User>,
+        SelfResponseDeletable<Self>,
+        Listenable<R> {
     protected final DiscordApi api;
     protected final long context;
     protected final Supplier<EmbedBuilder> embedBaseSupplier;
@@ -35,6 +40,7 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R>
     protected @Nullable TimeUnit timeUnit;
     protected @Nullable R defaultValue;
     protected @Nullable User target;
+    protected boolean responseDeletion;
 
     protected boolean active = false;
 
@@ -44,6 +50,8 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R>
         this.api = context.getApi();
         this.context = context.getId();
         this.embedBaseSupplier = embedBaseSupplier == null ? DefaultEmbedFactory.INSTANCE : embedBaseSupplier;
+
+        this.responseDeletion = false;
 
         this.modifiers = new ArrayList<>();
     }
@@ -103,6 +111,18 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R>
     @Override
     public Optional<User> getTarget() {
         return Optional.ofNullable(target);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Self withResponseDeletion(boolean status) {
+        this.responseDeletion = status;
+        return (Self) this;
+    }
+
+    @Override
+    public boolean getResponseDeletionStatus() {
+        return responseDeletion;
     }
 
     protected EmbedBuilder makeEmbed() {

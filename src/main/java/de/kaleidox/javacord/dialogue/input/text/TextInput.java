@@ -74,5 +74,8 @@ public class TextInput extends SingleInputAction<TextInput, String> {
 
         responseFuture.complete(event.getMessageContent());
         listenerManager.remove();
+
+        if (responseDeletion)
+            event.deleteMessage("Response Deletion");
     }
 }
