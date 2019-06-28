@@ -18,6 +18,7 @@ import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.reaction.SingleReactionEvent;
 import org.javacord.api.util.event.ListenerManager;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,10 +37,12 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
         this.options = new ArrayList<>();
     }
 
+    @Contract(value = "_, _, _, _ -> this", mutates = "this")
     public SelectionInput<R> addOption(String name, String description, String emoji, R value) {
         return addOption(new EmojiOption<>(name, description, emoji, value));
     }
 
+    @Contract(value = "null -> fail; _ -> this", mutates = "this")
     public SelectionInput<R> addOption(EmojiOption<R> option) {
         if (active) throw new IllegalStateException("SelectionInput is already listening!");
         if (options.stream().anyMatch(opt -> opt.getEmoji().equals(option.getEmoji())))
@@ -50,6 +53,7 @@ public class SelectionInput<R> extends SingleInputAction<SelectionInput<R>, R> {
         return this;
     }
 
+    @Contract(value = "null -> fail; _ -> this", mutates = "this")
     public SelectionInput<R> removeOptionIf(Predicate<EmojiOption<R>> filter) {
         if (active) throw new IllegalStateException("SelectionInput is already listening!");
 

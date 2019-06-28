@@ -22,6 +22,7 @@ import org.javacord.api.entity.channel.Channel;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,6 +58,7 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R> imple
     }
 
     @SuppressWarnings("unchecked")
+    @Contract(value = "_ -> this", mutates = "this")
     public Self addEmbedModifier(Consumer<EmbedBuilder> embedModifier) {
         if (active) throw new IllegalStateException("InputAction was already executed!");
 
@@ -67,6 +69,7 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R> imple
 
     @SuppressWarnings("unchecked")
     @Override
+    @Contract(value = "_, _ -> this", mutates = "this")
     public Self withTimeout(long time, TimeUnit unit) {
         if (active) throw new IllegalStateException("InputAction was already executed!");
 
@@ -85,6 +88,7 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R> imple
 
     @SuppressWarnings("unchecked")
     @Override
+    @Contract(value = "_ -> this", mutates = "this")
     public Self withDefaultValue(R value) {
         if (active) throw new IllegalStateException("InputAction was already executed!");
 
@@ -100,6 +104,7 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R> imple
 
     @SuppressWarnings("unchecked")
     @Override
+    @Contract(value = "_ -> this", mutates = "this")
     public Self withTarget(User target) {
         if (active) throw new IllegalStateException("InputAction was already executed!");
 
@@ -115,6 +120,7 @@ public abstract class SingleInputAction<Self extends SingleInputAction, R> imple
 
     @SuppressWarnings("unchecked")
     @Override
+    @Contract(value = "_ -> this", mutates = "this")
     public Self withResponseDeletion(boolean status) {
         this.responseDeletion = status;
         return (Self) this;
