@@ -1,4 +1,4 @@
-package de.kaleidox.javacord.dialogue.model;
+package de.kaleidox.javacord.dialogue.model.modifier;
 
 import org.jetbrains.annotations.Contract;
 

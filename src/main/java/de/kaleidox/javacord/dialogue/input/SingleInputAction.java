@@ -11,10 +11,10 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import de.kaleidox.javacord.dialogue.model.Listenable;
-import de.kaleidox.javacord.dialogue.model.SelfDefaultable;
-import de.kaleidox.javacord.dialogue.model.SelfResponseDeletable;
-import de.kaleidox.javacord.dialogue.model.SelfTargetable;
-import de.kaleidox.javacord.dialogue.model.SelfTimeoutable;
+import de.kaleidox.javacord.dialogue.model.modifier.SelfDefaultable;
+import de.kaleidox.javacord.dialogue.model.modifier.SelfResponseDeletable;
+import de.kaleidox.javacord.dialogue.model.modifier.SelfTargetable;
+import de.kaleidox.javacord.dialogue.model.modifier.SelfTimeoutable;
 import de.kaleidox.javacord.util.ui.embed.DefaultEmbedFactory;
 
 import org.javacord.api.DiscordApi;
