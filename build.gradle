@@ -40,7 +40,7 @@ compileJava.options.encoding = 'UTF-8'
 repositories.jcenter()
 
 dependencies {
-    api 'org.apache.logging.log4j:log4j-api:2.11.2'
+    api 'org.apache.logging.log4j:log4j-api:2.12.0'
 
     implementation('de.kaleidox:javacord-utilities:1.0.2rev1') 
             { exclude group: 'org.javacord' }
