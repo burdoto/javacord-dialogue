@@ -44,7 +44,7 @@ dependencies {
 
     implementation('de.kaleidox:javacord-utilities:1.0.2rev1') 
             { exclude group: 'org.javacord' }
-    implementation('org.javacord:javacord-api:3.0.4')
+    implementation('org.javacord:javacord-api:3.0.5')
             { exclude group: 'com.fasterxml.jackson.core' }
     implementation('org.javacord:javacord-core:3.0.4')
             { exclude group: 'com.fasterxml.jackson.core' }
